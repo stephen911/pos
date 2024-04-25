@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} POS Report{% endblock%}
+{% load app_tags %}
+
+
+{% block content %}
+
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                        <h4 class="mb-sm-0">POS Report</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">POS</a></li>
+                                <li class="breadcrumb-item active">POS Details</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row justify-content-center">
+                <div class="col-xxl-9">
+                    <div class="card" id="demo">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card-header border-bottom-dashed p-4">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <img src="{% static 'assets/images/logo-light.png' %}" class="card-logo card-logo-dark" alt="logo dark" height="50">
+                                            <img src="{% static 'assets/images/logo-light.png' %}" class="card-logo card-logo-light" alt="logo light" height="17">
+                                            <div class="mt-sm-5 mt-4">
+                                                <h6 class="text-muted text-uppercase fw-semibold">Address</h6>
+                                                <p class="text-muted mb-1" id="address-details">Atlantic Towers, Airport City</p>
+                                                <p class="text-muted mb-0" id="zip-code"><span>GPS Address:</span> GL 126 3809</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex-shrink-0 mt-sm-0 mt-3">
+                                            <h6><span class="text-muted fw-normal">P.O Box:</span><span id="legal-register-no"> PMB CT 212, Cantonments, Accra</span></h6>
+                                            <h6><span class="text-muted fw-normal">Email:</span><span id="email"> info@omnibsic.com.gh</span></h6>
+                                            <h6><span class="text-muted fw-normal">Website:</span> <a href="https://www.omnibsic.com.gh/" class="link-primary" target="_blank" id="website"> www.omnibsic.com.gh</a></h6>
+                                            <h6 class="mb-0"><span class="text-muted fw-normal">Contact No: </span><span id="contact-no"> +233 0307 086 000</span></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end card-header-->
+                            </div><!--end col-->
+                            <div class="col-lg-12">
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
+                                        <div class="col-lg-6 col-6">
+                                            <p class="text-muted mb-2 text-uppercase fw-semibold">POS No</p>
+                                            <h5 class="fs-14 mb-0">#<span id="POS-no">{{totalNoDevices}}</span></h5>
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-6 col-6">
+                                            <p class="text-muted mb-2 text-uppercase fw-semibold">Date</p>
+                                            <h5 class="fs-14 mb-0"><span id="POS-date">{{date}}</span> <small class="text-muted" id="POS-time">{{time}}</small></h5>
+                                        </div>
+                                        <!--end col-->
+                                        
+                                    
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                                <!--end card-body-->
+                            </div><!--end col-->
+                            
+                            <div class="col-lg-12">
+                                <div class="card-body p-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-center table-nowrap align-middle mb-0">
+                                            <thead>
+                                                <tr class="table-active">
+                                                    
+
+                                                    <th scope="col" style="width: 50px;" >POS ID</th>
+                                                        <th scope="col" >POS name</th>
+                                                        <th scope="col" >Merchant</th>
+                                                        <th scope="col" >Monitor</th>
+                                                        <th scope="col" >RM</th>
+                                                        <th scope="col" >Branch</th>
+
+
+                                                        <th scope="col" >Location</th>
+                                                       
+
+                                                        <th scope="col"  class="text-end">Device</th>
+                                                        
+                                                </tr>
+                                            </thead>
+                                            <tbody id="products-list">
+
+                                                {% for terminal in terminals %}
+                                                <tr>
+                                                    <th scope="row">{{ terminal.id }}</th>
+                                                    <td >
+                                                        <span class="fw-medium">{{ terminal.merchant }}</span>
+                                                        <p class="text-muted mb-0">{{ terminal.terminal_name }}</p>
+                                                    </td>
+                                                    <td>{{ terminal.merchant }}</td>
+
+                                                    <td>{{ terminal.monitor }}</td>
+                                                    <td >
+                                                        <span class="fw-medium">{{ terminal.merchant.relationship_manager }}</span>
+                                                        <p class="text-muted mb-0">{{ terminal.merchant.branch }}</p>
+                                                    </td>
+                                                    
+                                                    <td>{{ terminal.merchant.branch }}</td>
+
+                                                    
+
+                                                    <td>{{ terminal.location }}</td>
+                                                    <td class="text-end">
+                                                        <span class="fw-medium">{{ terminal.device_info|convert }}</span>
+                                                        <p class="text-muted mb-0">
+
+                                                            
+                                                           
+
+                                                            
+                                                                {% if terminal.device_info.status == "active" %}
+                                                                <span class="badge bg-success-subtle text-success text-uppercase">Active</span>
+                                                                {% elif terminal.device_info.status == "inactive"%}
+        
+                                                                <span class="badge bg-danger-subtle text-danger text-uppercase">Inactive</span>
+                                                                {% elif terminal.device_info.status == "faulty"%}
+        
+                                                                <span class="badge bg-info-subtle text-info text-uppercase">Faulty</span>
+                                                                {% else %}
+                                                                <span class="badge bg-warning-subtle text-warning text-uppercase">{{terminal.device_info.status}}</span>
+
+
+                                                                {% endif%}
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        </p>
+                                                    </td>
+                                                   
+                                                    
+                                                </tr>
+
+                                                {% endfor %}
+                                                
+                                               
+
+
+
+                                            </tbody>
+                                        </table><!--end table-->
+                                    </div>
+                                    <div class="border-top border-top-dashed mt-2">
+                                        <table class="table table-borderless table-nowrap align-middle mb-0 ms-auto" style="width:250px">
+                                            <tbody>
+                                                
+                                                <tr class="border-top border-top-dashed fs-15">
+                                                    <th scope="row">Total No.</th>
+                                                    <th class="text-end">{{totalNoDevices}}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--end table-->
+                                    </div>
+                                    <div class="mt-3">
+                                        <h6 class="text-muted text-uppercase fw-semibold mb-3">Report Details:</h6>
+                                        <p class="text-muted mb-1">Generated by: <span class="fw-medium" >{{request.user.username}}</span></p>
+                                        <p class="text-muted mb-1">Date: <span class="fw-medium" >{{date}}</span></p>
+                                        <p class="text-muted mb-1">POS No.: <span class="fw-medium" >{{totalNoDevices}}</span></p>
+                                        
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="alert alert-info">
+                                            <p class="mb-0"><span class="fw-semibold">NOTES:</span>
+                                                <span id="note">This report contains confidential information intended solely for the use of the individual or entity to whom it is addressed. If you are not the intended recipient, you are hereby notified that any dissemination, distribution, or copying of this report is strictly prohibited. Please notify the sender immediately and destroy all copies of this report.
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="hstack gap-2 justify-content-end d-print-none mt-4">
+                                        <a href="javascript:window.print()" class="btn btn-success"><i class="ri-printer-line align-bottom me-1"></i> Print</a>
+                                        <a href="{% url 'downloadreportPos' %}" class="btn btn-primary"><i class="ri-download-2-line align-bottom me-1"></i> Export CSV</a>
+                                    </div>
+                                </div>
+                                <!--end card-body-->
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div>
+                    <!--end card-->
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+
+        </div><!-- container-fluid -->
+    </div><!-- End Page-content -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Velzon.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end d-none d-sm-block">
+                        Design & Develop by Themesbrand
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+{% endblock %}

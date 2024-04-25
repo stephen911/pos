@@ -1,0 +1,1117 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} POS Report{% endblock%}
+{% load app_tags %}
+
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="profile-foreground position-relative mx-n4 mt-n4">
+            <div class="profile-wid-bg">
+                <img src="{% static 'assets/images/profile-bg.jpg' %}" alt="" class="profile-wid-img" />
+            </div>
+        </div>
+        <div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
+            <div class="row g-4">
+                <div class="col-auto">
+                    <div class="avatar-lg">
+                        <img src="{% static 'assets/images/pos.png' %}" alt="user-img" class="img-thumbnail rounded-circle" />
+                    </div>
+                </div>
+                <!--end col-->
+                <div class="col">
+                    <div class="p-2">
+                        <h3 class="text-white mb-1">{{terminal.merchant}}</h3>
+                        <p class="text-white text-opacity-75">{{terminal.terminal_name}}</p>
+                        <div class="hstack text-white-50 gap-1">
+                            <div class="me-2"><i class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{terminal.location}}</div>
+                            <div>
+                                <i class="ri-building-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{terminal.merchant.branch}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+                <div class="col-12 col-lg-auto order-last order-lg-0">
+                    <div class="row text text-white-50 text-center">
+                        <div class="col-lg-6 col-4">
+                            <div class="p-2">
+                                <h4 class="text-white mb-1">{{terminal.device_info.status | title}}</h4>
+                                <p class="fs-14 mb-0">Status</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!--end col-->
+
+            </div>
+            <!--end row-->
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <div class="d-flex profile-wrapper">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link fs-14 active" data-bs-toggle="tab" href="#overview-tab" role="tab">
+                                    <i class="ri-airplay-fill d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Overview</span>
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link fs-14" data-bs-toggle="tab" href="#activities" role="tab">
+                                    <i class="ri-list-unordered d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Device</span>
+                                </a>
+                            </li>
+                            {% comment %} <li class="nav-item">
+                                <a class="nav-link fs-14" data-bs-toggle="tab" href="#projects" role="tab">
+                                    <i class="ri-price-tag-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">Monitor</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fs-14" data-bs-toggle="tab" href="#documents" role="tab">
+                                    <i class="ri-folder-4-line d-inline-block d-md-none"></i> <span class="d-none d-md-inline-block">RM</span>
+                                </a>
+                            </li> {% endcomment %}
+                        </ul>
+                        <div class="flex-shrink-0">
+                            <a href="{% url 'editPos' terminal.id %}" class="btn btn-success"><i class="ri-edit-box-line align-bottom"></i> Edit POS</a>
+                        </div>
+                    </div>
+                    <!-- Tab panes -->
+                    <div class="tab-content pt-4 text-muted">
+                        <div class="tab-pane active" id="overview-tab" role="tabpanel">
+                            <div class="row">
+                                {% comment %} <div class="col-xxl-3">
+                                    
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-3">Info</h5>
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="ps-0" scope="row">POS Name :</th>
+                                                            <td class="text-muted">{{terminal.device_info.device_name}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="ps-0" scope="row">Merchant :</th>
+                                                            <td class="text-muted">{{terminal.merchant}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="ps-0" scope="row">Device :</th>
+                                                            <td class="text-muted">{{terminal.device_info | convert}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="ps-0" scope="row">Location :</th>
+                                                            <td class="text-muted">{{terminal.location}}</td>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="ps-0" scope="row">Status</th>
+                                                            <td class="text-muted">{{terminal.device_info.status}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+
+                                </div> {% endcomment %}
+                                <!--end col-->
+                                <div class="col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header align-items-center d-flex">
+                                                    <h4 class="card-title mb-0  me-2">POS Overview</h4>
+                                                    <div class="flex-shrink-0 ms-auto">
+                                                        <ul class="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" data-bs-toggle="tab" href="#today" role="tab">
+                                                                    Overview
+                                                                </a>
+                                                            </li>
+                                                           
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" data-bs-toggle="tab" href="#weekly" role="tab">
+                                                                    Merchant
+                                                                </a>
+                                                            </li>
+                                                            {% comment %} <li class="nav-item">
+                                                                <a class="nav-link" data-bs-toggle="tab" href="#monthly" role="tab">
+                                                                    RM
+                                                                </a>
+                                                            </li> {% endcomment %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="tab-content text-muted">
+
+
+
+                                                        <div class="tab-pane active" id="today" role="tabpanel">
+                                                            <div class="profile-timeline">
+                                                                <div class="accordion accordion-flush" id="todayExample">
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingOne">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="true">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            PN
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.device_info.device_name | title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">POS Name</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseTwo" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            M
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant | title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Merchant</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.email}}</a>
+                                                                                                </h6>
+                                                                                                <small>Email</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> 
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseThree" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            D
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.device_info | convert | title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Device</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        {% comment %} <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">{{terminal.device_info | convert}}</a>
+                                                                                                </h6>
+                                                                                                <small>Device</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> {% endcomment %}
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFour" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            L
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.location}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Location</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        {% comment %} <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">Bank Management System - PSD</a>
+                                                                                                </h6>
+                                                                                                <small>8.78 MB</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> {% endcomment %}
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFive" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            S
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.device_info.status | title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Status</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        {% comment %} <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">Bank Management System - PSD</a>
+                                                                                                </h6>
+                                                                                                <small>8.78 MB</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> {% endcomment %}
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFour" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            B
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.branch | title }}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Branch</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        {% comment %} <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">Bank Management System - PSD</a>
+                                                                                                </h6>
+                                                                                                <small>8.78 MB</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> {% endcomment %}
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </div>
+                                                                <!--end accordion-->
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="tab-pane" id="weekly" role="tabpanel">
+                                                            <div class="profile-timeline">
+                                                                <div class="accordion accordion-flush" id="weeklyExample">
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingOne">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="true">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            MN
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant | title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Merchant Name</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseTwo" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            ME
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.email | title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Merchant</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        {% comment %} <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.email}}</a>
+                                                                                                </h6>
+                                                                                                <small>Email</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>  {% endcomment %}
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseThree" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            P
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.phone| title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Phone</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        {% comment %} <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">{{terminal.device_info | convert}}</a>
+                                                                                                </h6>
+                                                                                                <small>Device</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> {% endcomment %}
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFour" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            L
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.address}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Address</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        {% comment %} <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                            <div class="accordion-body ms-2 ps-5">
+                                                                                <div class="row g-2">
+                                                                                    
+                                                                                    <div class="col-auto">
+                                                                                        <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                            <div class="flex-shrink-0">
+                                                                                                <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                            </div>
+                                                                                            <div class="flex-grow-1 ms-2">
+                                                                                                <h6 class="mb-0">
+                                                                                                    <a href="javascript:void(0);" class="stretched-link">Bank Management System - PSD</a>
+                                                                                                </h6>
+                                                                                                <small>8.78 MB</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> {% endcomment %}
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFive" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            SA
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.settlement_account | title}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Settlement Account</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFour" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            B
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.branch | title }}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Branch</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+
+                                                                    <div class="accordion-item border-0">
+                                                                        <div class="accordion-header" id="headingTwo">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFour" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            B
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.bank | title }}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Bank</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+
+                                                                        <div class="accordion-item border-0">
+                                                                            <div class="accordion-header" id="headingTwo">
+                                                                                <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseTwo" aria-expanded="false">
+                                                                                    <div class="d-flex">
+                                                                                        <div class="flex-shrink-0 avatar-xs">
+                                                                                            <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                                CP
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                            <h6 class="fs-14 mb-1">
+                                                                                                {{terminal.merchant.contact_person | title }}
+                                                                                            </h6>
+                                                                                            <small class="text-muted">Contact Person</small>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                                <div class="accordion-body ms-2 ps-5">
+                                                                                    <div class="row g-2">
+                                                                                        
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.contact_person.phone}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Phone</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                      
+
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.contact_person.address}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Address</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="accordion-body ms-2 ps-5">
+                                                                                    <div class="row g-2">
+                                                                                        
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.contact_person.email}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Email</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> 
+                                                                        </div>
+
+
+
+
+                                                                        <div class="accordion-item border-0">
+                                                                            <div class="accordion-header" id="headingTwo">
+                                                                                <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseThree" aria-expanded="false">
+                                                                                    <div class="d-flex">
+                                                                                        <div class="flex-shrink-0 avatar-xs">
+                                                                                            <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                                RM
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                            <h6 class="fs-14 mb-1">
+                                                                                                {{terminal.merchant.relationship_manager}}
+                                                                                            </h6>
+                                                                                            <small class="text-muted">Relationship Manager</small>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                                <div class="accordion-body ms-2 ps-5">
+                                                                                    <div class="row g-2">
+                                                                                        
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.relationship_manager.phone}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Phone</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                      
+
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.relationship_manager.address}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Address</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="accordion-body ms-2 ps-5">
+                                                                                    <div class="row g-2">
+                                                                                        
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.merchant.relationship_manager.email}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Email</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> 
+                                                                        </div>
+
+
+
+                                                                        <div class="accordion-item border-0">
+                                                                            <div class="accordion-header" id="headingTwo">
+                                                                                <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFour" aria-expanded="false">
+                                                                                    <div class="d-flex">
+                                                                                        <div class="flex-shrink-0 avatar-xs">
+                                                                                            <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                                M
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                            <h6 class="fs-14 mb-1">
+                                                                                                {{terminal.monitor}}
+                                                                                            </h6>
+                                                                                            <small class="text-muted">Monitor</small>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                                <div class="accordion-body ms-2 ps-5">
+                                                                                    <div class="row g-2">
+                                                                                        
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.monitor.zone}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Zone</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                      
+
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.monitor.monitor_address}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Address</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="accordion-body ms-2 ps-5">
+                                                                                    <div class="row g-2">
+                                                                                        
+                                                                                        <div class="col-auto">
+                                                                                            <div class="d-flex border border-dashed p-2 rounded position-relative">
+                                                                                                <div class="flex-shrink-0">
+                                                                                                    <i class="ri-file-zip-line fs-17 text-info"></i>
+                                                                                                </div>
+                                                                                                <div class="flex-grow-1 ms-2">
+                                                                                                    <h6 class="mb-0">
+                                                                                                        <a href="javascript:void(0);" class="stretched-link">{{terminal.monitor.relationship_manager}}</a>
+                                                                                                    </h6>
+                                                                                                    <small>Monitor RM</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> 
+                                                                        </div>
+
+                                                                </div>
+                                                                <!--end accordion-->
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                        
+
+
+
+                                                        <div class="tab-pane" id="monthly" role="tabpanel">
+                                                            <div class="profile-timeline">
+                                                                <div class="accordion accordion-flush" id="monthlyExample">
+                                                                    <div class="accordion-item border-0">
+                                                                        {% comment %} <div class="accordion-header" id="heading11">
+                                                                            <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapse11" aria-expanded="false">
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0 avatar-xs">
+                                                                                        <div class="avatar-title bg-light text-success rounded-circle material-shadow">
+                                                                                            RM
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 ms-3">
+                                                                                        <h6 class="fs-14 mb-1">
+                                                                                            {{terminal.merchant.relationship_manager}}
+                                                                                        </h6>
+                                                                                        <small class="text-muted">Relationship Manager</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div> {% endcomment %}
+
+                                                                        {% comment %} <div class="accordion-item border-0">
+                                                                            <div class="accordion-header" id="heading6">
+                                                                                <a class="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapse6" aria-expanded="true">
+                                                                                    <div class="d-flex">
+                                                                                        <div class="flex-shrink-0">
+                                                                                            <img src="{% static 'assets/images/users/user-dummy-img.jpg' %}" alt="" class="avatar-xs rounded-circle material-shadow" />
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                            <h6 class="fs-14 mb-1">
+                                                                                                {{terminal.monitor}}
+                                                                                            </h6>
+                                                                                            <small class="text-muted">Monitor</small>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            
+                                                                        </div> {% endcomment %}
+                                                                        
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                <!--end accordion-->
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+                                        </div><!-- end col -->
+                                    </div><!-- end row -->
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </div>
+
+                        <div class="tab-pane fade" id="activities" role="tabpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3">Devices</h5>
+                                    <div class="acitivity-timeline">
+                                        <div class="acitivity-item py-3 d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-xs acitivity-avatar">
+                                                    <div class="avatar-title rounded-circle bg-info-subtle text-info material-shadow">
+                                                        <i class="ri-line-chart-line"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="mb-1">{{terminal.device_info.device_name  | title}}</h6>
+                                                <p class="text-muted mb-2">
+                                                      <span class="text-info">Device Name</span> <a href="javascript:void(0);" class="link-warning text-decoration-underline"></a>
+                                                </p>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="acitivity-item py-3 d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-xs acitivity-avatar">
+                                                    <div class="avatar-title rounded-circle bg-info-subtle text-info material-shadow">
+                                                        <i class="ri-line-chart-line"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="mb-1">{{terminal.device_info.serialnumber}}</h6>
+                                                <p class="text-muted mb-2">
+                                                      <span class="text-info">Serial Number</span> <a href="javascript:void(0);" class="link-warning text-decoration-underline"></a>
+                                                </p>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="acitivity-item py-3 d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-xs acitivity-avatar">
+                                                    <div class="avatar-title rounded-circle bg-info-subtle text-info material-shadow">
+                                                        <i class="ri-line-chart-line"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="mb-1">{{terminal.device_info.brand | title}}</h6>
+                                                <p class="text-muted mb-2">
+                                                      <span class="text-info">Brand</span> <a href="javascript:void(0);" class="link-warning text-decoration-underline"></a>
+                                                </p>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="acitivity-item py-3 d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-xs acitivity-avatar">
+                                                    <div class="avatar-title rounded-circle bg-info-subtle text-info material-shadow">
+                                                        <i class="ri-line-chart-line"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="mb-1">{{terminal.device_info.model | title}}</h6>
+                                                <p class="text-muted mb-2">
+                                                      <span class="text-info">Model</span> <a href="javascript:void(0);" class="link-warning text-decoration-underline"></a>
+                                                </p>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="acitivity-item py-3 d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-xs acitivity-avatar">
+                                                    <div class="avatar-title rounded-circle bg-info-subtle text-info material-shadow">
+                                                        <i class="ri-line-chart-line"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="mb-1">{{terminal.device_info.connectivity}}</h6>
+                                                <p class="text-muted mb-2">
+                                                      <span class="text-info">Connectivity</span> <a href="javascript:void(0);" class="link-warning text-decoration-underline"></a>
+                                                </p>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="acitivity-item py-3 d-flex">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-xs acitivity-avatar">
+                                                    <div class="avatar-title rounded-circle bg-info-subtle text-info material-shadow">
+                                                        <i class="ri-line-chart-line"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="mb-1">{{terminal.device_info.sim | title}}</h6>
+                                                <p class="text-muted mb-2">
+                                                      <span class="text-info">Sim</span> <a href="javascript:void(0);" class="link-warning text-decoration-underline"></a>
+                                                </p>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div>
+
+
+                        <!--end tab-pane-->
+                        <div class="tab-pane fade" id="projects" role="tabpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xxl-3 col-sm-6">
+                                            <div class="card profile-project-card shadow-none profile-project-warning material-shadow">
+                                                <div class="card-body p-4">
+                                                    <div class="d-flex">
+                                                        <div class="flex-grow-1 text-muted overflow-hidden">
+                                                            <h5 class="fs-14 text-truncate"><a href="#" class="text-body">{{terminal.monitor}}</a></h5>
+                                                            <p class="text-muted text-truncate mb-0"><span class="fw-semibold text-body">Monitor</span></p>
+                                                        </div>
+                                                        <div class="flex-shrink-0 ms-2">
+                                                            <div class="badge bg-info-subtle text-info fs-10">New</div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+                                        </div>
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                                <!--end card-body-->
+                            </div>
+                            <!--end card-->
+                        </div>
+
+
+                        <!--end tab-pane-->
+                        <div class="tab-pane fade" id="documents" role="tabpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <h5 class="card-title flex-grow-1 mb-0">Documents</h5>
+                                        <div class="flex-shrink-0">
+                                            <input class="form-control d-none" type="file" id="formFile">
+                                            <label for="formFile" class="btn btn-danger"><i class="ri-upload-2-fill me-1 align-bottom"></i> Upload File</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless align-middle mb-0">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th scope="col">File Name</th>
+                                                            <th scope="col">Type</th>
+                                                            <th scope="col">Size</th>
+                                                            <th scope="col">Upload Date</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="avatar-sm">
+                                                                        <div class="avatar-title bg-primary-subtle text-primary rounded fs-20 material-shadow">
+                                                                            <i class="ri-file-zip-fill"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ms-3 flex-grow-1">
+                                                                        <h6 class="fs-15 mb-0"><a href="javascript:void(0)">Artboard-documents.zip</a>
+                                                                        </h6>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>Zip File</td>
+                                                            <td>4.57 MB</td>
+                                                            <td>12 Dec 2021</td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <a href="javascript:void(0);" class="btn btn-light btn-icon" id="dropdownMenuLink15" data-bs-toggle="dropdown" aria-expanded="true">
+                                                                        <i class="ri-equalizer-fill"></i>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink15">
+                                                                        <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-eye-fill me-2 align-middle text-muted"></i>View</a></li>
+                                                                        <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-download-2-fill me-2 align-middle text-muted"></i>Download</a></li>
+                                                                        <li class="dropdown-divider"></li>
+                                                                        <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-delete-bin-5-line me-2 align-middle text-muted"></i>Delete</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="text-center mt-3">
+                                                <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-20 align-middle me-2"></i> Load more </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end tab-pane-->
+                    </div>
+                    <!--end tab-content-->
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+
+    </div><!-- container-fluid -->
+</div><!-- End Page-content -->
+
+{% endblock %}

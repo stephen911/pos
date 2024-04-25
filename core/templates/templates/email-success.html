@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Already Signed out</title>
+
+    <link href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{ url_for('static', filename='assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{ url_for('static', filename='assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="{{ url_for('static', filename='assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <style>
+        /* Add your styles here */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 400px; /* Adjust as per your need */
+            text-align: center;
+        }
+
+        .card-footer {
+            border-top: none; /* Remove border-top to center the footer content */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="col-sm-6 col-lg-4">
+        <div class="card card-success">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    
+                    <p class="card-text">
+                        <span style="font-weight: 500">{{name}}</span>, you have
+                        successfully signed out from
+                        <span style="font-style: italic">{{course}}</span>. Thank you.
+                      </p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="text-center">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

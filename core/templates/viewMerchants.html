@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Merchants {% endblock%}
+
+
+{% block content %}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="h-100">
+                    {% include 'greetings.html' with name="Merchants" link="/addMerchants"%}
+                    {% include 'alert.html' %}
+                    {% include 'info.html' %}
+                </div>
+            </div>
+        </div>
+                    
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Merchants</h4>
+                                    <div class="flex-shrink-0">
+                                        <a href="/addMerchants" class="btn btn-soft-info btn-sm material-shadow-none">
+                                            <i class="ri-file-list-3-line align-middle"></i> Add Merchant
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                              
+
+                                        <div class="table-responsive">
+                                            <table id="file_export" class="table w-100 table-striped table-bordered display text-nowrap">
+                                              <thead>
+                                                <!-- start row -->
+                                                <tr>
+                                                  <th>Merchants ID</th>
+                              
+                                                  <th>Merchants name</th>
+                                                  <th>Email</th>
+                                                  <th>RM</th>
+                                                  <th>Location</th>
+                                                  <th>Device</th>
+                                                  <th>Action</th>
+
+                                                 
+                                                  
+                                                </tr>
+                                                <!-- end row -->
+                                              </thead>
+                                              <tbody>
+                                                <!-- start row -->
+                                               {% for merchant in merchants %}
+                                                                                  <tr>
+                                                                                      
+                                                                                      {% comment %} <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">{{ merchant.id }}</a></td> {% endcomment %}
+                                                                                      <td class="customer_name">{{ merchant.id }}</td>
+                                                                                      <td class="email">{{ merchant.name }}</td>
+                                                                                      <td class="customer_name">{{ merchant.email }}</td>
+                              
+                                                                                      <td class="phone">{{ merchant.relationship_manager }}</td>
+                                                                                      <td class="date">{{ merchant.location }}</td>
+                                                                                      <td class="status"><span class="badge bg-success-subtle text-success text-uppercase">{{ merchant.device_info }}</span></td>
+                                                                                      <td>
+                                                                                          <div class="d-flex gap-2">
+                                                                                              <div class="view">
+                                                                                                  <a href="{% url 'viewPosDetails' merchant.id %}" class="btn btn-soft-info btn-sm material-shadow-none" > <i class="ri-file-list-3-line align-middle"></i>View</a>
+                                                                                              </div>
+                                                                                              <div class="edit">
+                                                                                                  <a href="{% url 'editPos' merchant.id %}" class="btn btn-soft-success btn-sm material-shadow-none" ><i class="ri-file-list-3-line align-middle"></i>Edit</a>
+                                                                                              </div>
+                                                                                              <div class="remove">
+                                                                                                  <button class="btn btn-soft-danger btn-sm material-shadow-none" data-bs-toggle="modal" data-bs-target="#deleteRecordModal"><i class="ri-file-list-3-line align-middle"></i>Delete</button>
+                                                                                              </div>
+                                                                                          </div>
+                                                                                      </td>
+                                                                                  </tr>
+                              
+                                                                                  {% endfor %}
+                                              
+                                                <!-- end row -->
+                                                <!-- start row -->
+                                             
+                                                <!-- end row -->
+                                              </tbody>
+                                              <tfoot>
+                                                <!-- start row -->
+                                                <tr>
+                                                    <th>Merchants ID</th>
+                              
+                                                    <th>Merchants name</th>
+                                                    <th>Email</th>
+                                                    <th>RM</th>
+                                                    <th>Location</th>
+                                                    <th>Device</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                <!-- end row -->
+                                              </tfoot>
+                                            </table>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- .card-->
+                        </div> <!-- .col-->
+                    </div> <!-- end row-->
+
+                </div> <!-- end .h-100-->
+
+            </div> <!-- end col -->
+
+            
+        </div>
+
+    </div>
+    <!-- container-fluid -->
+
+{% endblock %}
+

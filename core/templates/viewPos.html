@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} POS {% endblock%}
+{% load app_tags %}
+
+
+{% block titlescript%} 
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/dataTables.bootstrap5.min.css' %}"> {% endcomment %}
+<link href="{% static 'assets/css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+
+
+{% endblock %}
+{% block content %}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="h-100">
+                    {% include 'greetings.html' with name="POS" link="/addPos"%}
+                    {% include 'alert.html' %}
+                    {% include 'info.html' %}
+
+
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            
+
+                      </div> <!-- end col -->
+
+                    </div>
+                </div><!-- end card -->
+              </div>
+    <!-- end col -->
+
+    <div class="datatables">
+        <!-- start File export -->
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-2">
+              <h4 class="card-title mb-0">POS</h4>
+            </div>
+            <div class="col-sm-auto">
+              <div>
+                  
+                  <a href="/reportPos" class="btn btn-soft-info btn-sm material-shadow-none">
+                      <i class="ri-file-list-3-line align-middle"></i> POS
+                  </a>
+              </div>
+              
+          </div>
+          <br>
+            <div class="table-responsive">
+              <table id="file_export" class="table w-100 table-striped table-bordered display text-nowrap">
+                <thead>
+                  <!-- start row -->
+                  <tr>
+                    <th>POS ID</th>
+
+                    <th>POS name</th>
+                    <th>Merchant</th>
+                    <th>Monitor</th>
+                    <th>Location</th>
+                    <th>Device</th>
+                    <th>Action</th>
+                    
+                  </tr>
+                  <!-- end row -->
+                </thead>
+                <tbody>
+                  <!-- start row -->
+                 {% for terminal in terminals %}
+                                                    <tr>
+                                                        
+                                                        {% comment %} <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">{{ terminal.id }}</a></td> {% endcomment %}
+                                                        <td class="customer_name">{{ terminal.id }}</td>
+                                                        <td class="email">{{ terminal.terminal_name }}</td>
+                                                        <td class="customer_name">{{ terminal.merchant }}</td>
+
+                                                        <td class="phone">{{ terminal.monitor }}</td>
+                                                        <td class="date">{{ terminal.location }}</td>
+                                                        <td class="status"><span class="badge bg-success-subtle text-success text-uppercase">{{ terminal.device_info | convert }}</span></td>
+                                                        <td>
+                                                            <div class="d-flex gap-2">
+                                                                <div class="view">
+                                                                    <a href="{% url 'viewPosDetails' terminal.id %}" class="btn btn-sm btn-info edit-item-btn" >View</a>
+                                                                </div>
+                                                                <div class="edit">
+                                                                    <a href="{% url 'editPos' terminal.id %}" class="btn btn-sm btn-success edit-item-btn" >Edit</a>
+                                                                </div>
+                                                                <div class="remove">
+                                                                    <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Delete</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    {% endfor %}
+                
+                  <!-- end row -->
+                  <!-- start row -->
+               
+                  <!-- end row -->
+                </tbody>
+                <tfoot>
+                  <!-- start row -->
+                  <tr>
+                    <th>POS ID</th>
+
+                    <th>POS name</th>
+                    <th>Merchant</th>
+                    <th>Monitor</th>
+                    <th>Location</th>
+                    <th>Device</th>
+                    <th>Action</th>
+                  </tr>
+                  <!-- end row -->
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- end File export -->
+</div>
+<!-- end col -->
+</div>
+<!-- end row -->
+
+            
+        </div>
+
+    </div>
+    <!-- container-fluid -->
+
+{% endblock %}
+
+
+{% block scripts %}
+    {% comment %} <script src="{% static 'assets/assetsss/js/vendor.min.js' %}"></script>
+
+  <!-- solar icons -->
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+  <script src="{% static 'assets/js/datatable-advanced.init.js' %}"></script>
+
+  <link href="{% static 'assets/css/custom.min.css' %}" rel="stylesheet" type="text/css" /> {% endcomment %}
+
+
+{% comment %} <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet" type="text/css" /> {% endcomment %}
+
+
+{% endblock %}

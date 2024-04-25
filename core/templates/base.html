@@ -1,0 +1,206 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+<head>
+
+    <meta charset="utf-8" />
+    <title>{% block title %}  {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+
+
+    <!-- jsvectormap css -->
+    <link href="{% static 'assets/libs/jsvectormap/css/jsvectormap.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!--Swiper slider css-->
+    <link href="{% static 'assets/libs/swiper/swiper-bundle.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Layout config Js -->
+    <script src="{% static 'assets/js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="{% static 'assets/css/custom.min.css' %}" rel="stylesheet" type="text/css" />
+
+
+
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+
+    {% block titlescript%}
+
+
+    {% endblock %}
+    <style>
+        
+        .paginationn {
+            margin-top: 20px;
+        }
+        .step-links {
+            text-align: center;
+        }
+        .step-links a {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+        .current {
+            margin: 0 10px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+    {% include 'navbar.html' %}
+
+        <!-- ========== App Menu ========== -->
+        <div class="app-menu navbar-menu">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <!-- Dark Logo-->
+                <a href="{% url 'home' %}" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{% static 'assets/images/logo-sm.png' %}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'assets/images/logo-dark.png' %}" alt="" height="17">
+                    </span>
+                </a>
+                <!-- Light Logo-->
+                <a href="{% url 'home' %}" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{% static 'assets/images/logo-sm.png' %}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'assets/images/logo-lightt.png' %}" alt="" height="50">
+                    </span>
+                </a>
+                <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+                    <i class="ri-record-circle-line"></i>
+                </button>
+            </div>
+    
+            
+            {% include 'sidebar.html' %}
+
+            <div class="sidebar-background"></div>
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            
+            
+            {% block content %}
+
+            {% endblock %}
+
+            </div>
+            <!-- End Page-content -->
+
+            {% include 'footer.html' %}
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+    <script src="{% static 'assets/libs/feather-icons/feather.min.js' %}"></script>
+    <script src="{% static 'assets/js/pages/plugins/lord-icon-2.1.0.js' %}"></script>
+    <script src="{% static 'assets/js/plugins.js' %}"></script>
+
+    <!-- prismjs plugin -->
+    <script src="{% static 'assets/libs/prismjs/prism.js' %}"></script>
+    <script src="{% static 'assets/libs/list.js/list.min.js' %}"></script>
+    <script src="{% static 'assets/libs/list.pagination.js/list.pagination.min.js' %}"></script>
+
+    <!-- listjs init -->
+    <script src="{% static 'assets/js/pages/listjs.init.js' %}"></script>
+
+    <!-- Sweet Alerts js -->
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+    
+
+
+
+
+    <!-- apexcharts -->
+    <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+    <!-- Vector map-->
+    <script src="{% static 'assets/libs/jsvectormap/js/jsvectormap.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jsvectormap/maps/world-merc.js' %}"></script>
+
+    <!--Swiper slider js-->
+    <script src="{% static 'assets/libs/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Dashboard init -->
+    <script src="{% static 'assets/js/pages/dashboard-ecommerce.init.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'assets/js/app.js' %}"></script>
+    <script src="{% static 'assets/js/at.js' %}"></script>
+
+
+
+
+    <script src="{% static 'assets/assetsss/js/vendor.min.js' %}"></script>
+
+    <!-- solar icons -->
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="{% static 'assets/js/datatable-advanced.init.js' %}"></script>
+<link href="{% static 'assets/css/styles.css' %}" rel="stylesheet" type="text/css" />
+
+  
+    {% comment %} <link href="{% static 'assets/css/custom.min.css' %}" rel="stylesheet" type="text/css" /> {% endcomment %}
+  
+    {% block scripts %}
+
+    {% endblock %}
+
+</body>
+
+
+</html>

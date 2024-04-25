@@ -1,0 +1,119 @@
+
+
+
+{% for message in messages %}
+    {% if message.tags == 'success' %}
+      <!-- sweetalert js -->
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+        var m = "{{ message }}";
+        Swal.fire({
+          icon: 'success',
+          iconHtml: '<i class="fa fa-check"></i>',
+          text: m,
+          
+          color: '#000',
+          background: 'rgba(255,255,255, 0.9);',
+          allowEscapeKey: false,
+          showClass: {
+            popup: 'my-icon'                     // disable popup animation css
+          },
+        });
+      </script>
+
+      {%endif%}
+
+
+
+      
+
+      {% if message.tags == 'error' %}
+
+     <!-- sweetalert js -->
+     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script>
+       var m = "{{ message }}";
+       Swal.fire({
+         icon: 'success',
+         iconHtml: '<i class="fa fa-check"></i>',
+         text: m,
+         color: '#000',
+         background: 'rgba(255,255,255, 0.9);',
+         allowEscapeKey: false,
+         showClass: {
+           popup: 'my-icon'                 
+         },
+       });
+     </script>
+
+     {%endif%}
+
+    
+    {% if message.tags == 'warning' %}
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then((result) => {
+  
+  if (result.isConfirmed) {
+    <a
+                              href="{% url 'delete_app' message.extra_tags  %}"
+                              
+                              ></a>
+
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+
+
+  }
+});
+    </script>
+
+    
+
+    {% else %}
+    <!-- sweetalert js -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then((result) => {
+  
+  if (result.isConfirmed) {
+const Http = new XMLHttpRequest();
+const url="{% url 'delete_app' message.extra_tags  %}";
+Http.open("GET", url);
+Http.send();
+Http.onreadystatechange = (e) => {
+  console.log(Http.responseText)
+}
+
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+
+  }
+});
+    </script>
+    {% endif %}
+  {% endfor %}
